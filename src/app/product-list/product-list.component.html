@@ -1,0 +1,13 @@
+<div *ngIf="error" class="error">
+    Error: {{ error }}
+</div>
+<div *ngIf="!error && products.length">
+    <ul>
+        <li *ngFor="let product of products">
+            {{ product.title }} - {{ product.price | currency:'USD' }}
+        </li>
+    </ul>
+</div>
+<div *ngIf="!error && !products.length">
+    No products available.
+</div>
