@@ -43380,20 +43380,20 @@ var MenubarModule = class _MenubarModule {
 })();
 
 // src/app/header/header.component.ts
-function HeaderComponent_ng_template_4_Template(rf, ctx) {
+function HeaderComponent_ng_template_6_Template(rf, ctx) {
 }
-function HeaderComponent_ng_template_5_Template(rf, ctx) {
+function HeaderComponent_ng_template_7_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "ul")(1, "li")(2, "a", 6);
+    \u0275\u0275elementStart(0, "ul")(1, "li")(2, "a", 7);
     \u0275\u0275text(3, "Home");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "li")(5, "a", 7);
+    \u0275\u0275elementStart(4, "li")(5, "a", 8);
     \u0275\u0275text(6, "Products");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "li")(8, "a", 8);
+    \u0275\u0275elementStart(7, "li")(8, "a", 9);
     \u0275\u0275text(9, "About Us");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "li")(11, "a", 9);
+    \u0275\u0275elementStart(10, "li")(11, "a", 10);
     \u0275\u0275text(12, "Contact");
     \u0275\u0275elementEnd()()();
   }
@@ -43402,13 +43402,16 @@ var HeaderComponent = class _HeaderComponent {
   static \u0275fac = function HeaderComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _HeaderComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["app-header"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 6, vars: 0, consts: [[1, "flex-row", "center-vertical", "header"], [1, "logo"], ["src", "lt_shop_logo.svg", "alt", "Company Logo"], [1, "flex-grow"], ["pTemplate", "start"], ["pTemplate", "end"], ["routerLink", "/"], ["routerLink", "/product-list"], ["routerLink", "/about"], ["routerLink", "/contact"]], template: function HeaderComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["app-header"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 8, vars: 0, consts: [[1, "flex-row", "center-vertical", "header"], [1, "logo"], ["src", "lt_shop_logo.svg", "alt", "Company Logo"], ["src", "mountain.png", "alt", "Company Logo"], [1, "flex-grow"], ["pTemplate", "start"], ["pTemplate", "end"], ["routerLink", "/"], ["routerLink", "/product-list"], ["routerLink", "/about"], ["routerLink", "/contact"]], template: function HeaderComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "div", 1);
       \u0275\u0275element(2, "img", 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(3, "p-menubar", 3);
-      \u0275\u0275template(4, HeaderComponent_ng_template_4_Template, 0, 0, "ng-template", 4)(5, HeaderComponent_ng_template_5_Template, 13, 0, "ng-template", 5);
+      \u0275\u0275elementStart(3, "div", 1);
+      \u0275\u0275element(4, "img", 3);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(5, "p-menubar", 4);
+      \u0275\u0275template(6, HeaderComponent_ng_template_6_Template, 0, 0, "ng-template", 5)(7, HeaderComponent_ng_template_7_Template, 13, 0, "ng-template", 6);
       \u0275\u0275elementEnd()();
     }
   }, dependencies: [MenubarModule, Menubar, RouterLink, PrimeTemplate], styles: ["\n\n.header[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  background-color: #f8f9fa;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n.logo[_ngcontent-%COMP%] {\n  width: 150px;\n  height: 150px;\n  margin: 0.5rem;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
