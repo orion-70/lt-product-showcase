@@ -43402,7 +43402,7 @@ var HeaderComponent = class _HeaderComponent {
   static \u0275fac = function HeaderComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _HeaderComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["app-header"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 8, vars: 0, consts: [[1, "flex-row", "center-vertical", "header"], [1, "logo"], ["src", "lt_shop_logo.svg", "alt", "Company Logo"], ["src", "mountain.png", "alt", "Company Logo"], [1, "flex-grow"], ["pTemplate", "start"], ["pTemplate", "end"], ["routerLink", "/"], ["routerLink", "/product-list"], ["routerLink", "/about"], ["routerLink", "/contact"]], template: function HeaderComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["app-header"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 8, vars: 0, consts: [[1, "flex-row", "center-vertical", "header"], [1, "logo"], ["src", "/lt_shop_logo.svg", "alt", "Company Logo"], ["src", "/mountain.png", "alt", "Company Logo"], [1, "flex-grow"], ["pTemplate", "start"], ["pTemplate", "end"], ["routerLink", "/"], ["routerLink", "/product-list"], ["routerLink", "/about"], ["routerLink", "/contact"]], template: function HeaderComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "div", 1);
       \u0275\u0275element(2, "img", 2);
