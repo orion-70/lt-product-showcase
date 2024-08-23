@@ -4,7 +4,7 @@ import { ProductService } from '../services/product.service';
 
 import { ButtonModule } from 'primeng/button';
 
-import { Product, ProductsResponse } from '../models/product-models';
+import { ProductsResponse } from '../models/product-models';
 
 @Component({
   selector: 'app-product-list',

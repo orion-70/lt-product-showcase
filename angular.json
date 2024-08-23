@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
@@ -60,7 +60,7 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -93,7 +93,7 @@
               }
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/themes/md-light-deeppurple/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
