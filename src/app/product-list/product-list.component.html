@@ -1,13 +1,8 @@
-<p-button label="Submit" />
 <div *ngIf="error" class="error">
     Error: {{ error }}
 </div>
-<div *ngIf="!error && productsResponse?.products?.length">
-    <ul>
-        <li *ngFor="let product of productsResponse?.products">
-            {{ product.title }} - {{ product.price | currency:'USD' }}
-        </li>
-    </ul>
+<div class="product-grid">
+    <app-product-card *ngFor="let product of products" [product]="product" (click)="onClickGoToProductDetails(product.id)"></app-product-card>
 </div>
 <div *ngIf="!error && !productsResponse?.products?.length">
     No products available.

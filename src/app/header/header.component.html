@@ -1,17 +1,8 @@
-<div class="flex-row center-vertical header">
-    <div class="logo">
-        <img src="./lt_shop_logo.svg" alt="Company Logo">
-    </div>
-    <p-menubar class="flex-grow">
-        <ng-template pTemplate="start">
-        </ng-template>
-        <ng-template pTemplate="end">
-            <ul>
-                <li><a routerLink="/">Home</a></li>
-                <li><a routerLink="/product-list">Products</a></li>
-                <li><a routerLink="/about">About Us</a></li>
-                <li><a routerLink="/contact">Contact</a></li>
-            </ul>
-        </ng-template>
-    </p-menubar>
-</div>
+<p-menubar [model]="items" class="flex-grow header">
+    <ng-template pTemplate="start">
+        <img src="lt_shop_logo.png" class="logo">
+    </ng-template>
+    <ng-template pTemplate="end">
+        <input type="text" pInputText placeholder="Search">
+    </ng-template>
+</p-menubar>

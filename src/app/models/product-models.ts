@@ -1,5 +1,5 @@
 export class Product {
-    id: number;
+    id: string;
     title: string;
     description: string;
     category: string;
@@ -47,17 +47,17 @@ export class Product {
         this.thumbnail = data.thumbnail;
     }
 
-    getDiscountedPrice(): number {
-        return this.price - (this.price * (this.discountPercentage / 100));
+    getOriginalPrice(): string {
+        return this.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+
+    getDiscountedPrice(): string {
+        const discountedPrice = this.price - (this.price * (this.discountPercentage / 100));
+        return discountedPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     }
 
     isAvailable(): boolean {
         return this.stock > 0;
-    }
-
-    getAverageReviewRating(): number {
-        const totalRating = this.reviews.reduce((acc, review) => acc + review.rating, 0);
-        return totalRating / this.reviews.length;
     }
 }
 
@@ -110,7 +110,7 @@ export class ProductsResponse {
         this.products = data.products.map((product: any) => new Product(product));
     }
 
-    getProductById(id: number): Product | undefined {
+    getProductById(id: string): Product | undefined {
         return this.products.find(product => product.id === id);
     }
 

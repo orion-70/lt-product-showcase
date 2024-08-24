@@ -1,0 +1,29 @@
+<div *ngIf="product; else loading" class="product-content">
+    <h1>{{ product.title }}</h1>
+    <img *ngFor="let image of product.images" [src]="image" [alt]="product.title" class="product-image"/>
+    <p>{{ product.description }}</p>
+    <p>Category: {{ product.category }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <p>Discount: {{ product.discountPercentage }}%</p>
+    <p>Rating: {{ product.rating }}</p>
+    <p>Stock: {{ product.stock }}</p>
+    <p>Brand: {{ product.brand }}</p>
+    <p>SKU: {{ product.sku }}</p>
+    <p>Weight: {{ product.weight }} kg</p>
+    <p>Dimensions: {{ product.dimensions }}</p>
+    <p>Warranty: {{ product.warrantyInformation }}</p>
+    <p>Shipping: {{ product.shippingInformation }}</p>
+    <p>Availability: {{ product.availabilityStatus }}</p>
+    <p>Return Policy: {{ product.returnPolicy }}</p>
+    <p>Minimum Order Quantity: {{ product.minimumOrderQuantity }}</p>
+    <div>
+      <h2>Reviews</h2>
+      <div *ngFor="let review of product.reviews">
+        <p>{{ review.comment }}</p>
+        <p>Rating: {{ review.rating }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div>Loading...</div>
+  </ng-template>
