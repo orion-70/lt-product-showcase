@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/product-list/product-list.component.scss"],
+  "sourcesContent": [".product-grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\r\n    gap: 1rem;\r\n    height: 100%;\r\n    margin: 1rem;\r\n}"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,yBAAA,OAAA,SAAA,EAAA,OAAA,KAAA,EAAA;AACA,OAAA;AACA,UAAA;AACA,UAAA;;",
+  "names": []
+}

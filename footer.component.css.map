@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/footer/footer.component.scss"],
+  "sourcesContent": [".footer {\r\n  background-color: #f8f8f8;\r\n  padding: 20px 0;\r\n  text-align: center;\r\n}\r\n\r\n.footer-container {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.footer-section {\r\n  flex: 1;\r\n  margin: 10px;\r\n}\r\n\r\n.footer-section h4 {\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.footer-section ul {\r\n  list-style: none;\r\n  padding: 0;\r\n}\r\n\r\n.footer-section ul li {\r\n  margin: 5px 0;\r\n}\r\n\r\n.footer-section ul li a {\r\n  text-decoration: none;\r\n  color: #333;\r\n}\r\n\r\n.footer-bottom {\r\n  margin-top: 20px;\r\n}"],
+  "mappings": ";AAAA,CAAA;AACE,oBAAA;AACA,WAAA,KAAA;AACA,cAAA;;AAGF,CAAA;AACE,WAAA;AACA,mBAAA;AACA,aAAA;;AAGF,CAAA;AACE,QAAA;AACA,UAAA;;AAGF,CALA,eAKA;AACE,iBAAA;;AAGF,CATA,eASA;AACE,cAAA;AACA,WAAA;;AAGF,CAdA,eAcA,GAAA;AACE,UAAA,IAAA;;AAGF,CAlBA,eAkBA,GAAA,GAAA;AACE,mBAAA;AACA,SAAA;;AAGF,CAAA;AACE,cAAA;;",
+  "names": []
+}

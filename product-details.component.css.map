@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/product-details/product-details.component.scss"],
+  "sourcesContent": [".product-content {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin: 1rem 3rem;\r\n    padding: 1rem 3rem;\r\n    border: 1px solid #ccc;\r\n    border-radius: 5px;\r\n    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.product-image {\r\n    width: 75%;\r\n    margin: 0 auto;\r\n}"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,kBAAA;AACA,mBAAA;AACA,eAAA;AACA,UAAA,KAAA;AACA,WAAA,KAAA;AACA,UAAA,IAAA,MAAA;AACA,iBAAA;AACA,cAAA,IAAA,IAAA,IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA;;AAGJ,CAAA;AACI,SAAA;AACA,UAAA,EAAA;;",
+  "names": []
+}
