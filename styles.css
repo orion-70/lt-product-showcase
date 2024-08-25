@@ -10532,6 +10532,10 @@ body {
 .center-vertical {
   align-items: center;
 }
+.highlight {
+  color: green;
+  font-style: italic;
+}
 
 /* angular:styles/global:styles */
 /*# sourceMappingURL=styles.css.map */
