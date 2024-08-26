@@ -3,6 +3,13 @@
         <img src="lt_shop_logo.png" class="logo">
     </ng-template>
     <ng-template pTemplate="end">
-        <input type="text" pInputText placeholder="Search">
+        <div class="search-container">
+            <input #searchInput type="text" pInputText [formControl]="searchControl" placeholder="Quick search">
+            <ul *ngIf="searchResults?.products?.length" class="search-results">
+                <li *ngFor="let product of searchResults?.products" (click)="onSelectProduct(product)">
+                    {{ product.title }}
+                </li>
+            </ul>
+        </div>
     </ng-template>
 </p-menubar>

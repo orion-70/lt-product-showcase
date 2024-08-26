@@ -1,9 +1,9 @@
-<p-card *ngIf="product" class="product-card">
+<p-card *ngIf="product" class="product-card" [style]="{ height: '100%' }">
     <ng-template pTemplate="header">
         <img [src]="product.thumbnail" [alt]="product.title" class="product-image" />
     </ng-template>
     <div class="product-details">
-        {{ product.title }}
+        <div [innerHTML]="htmlContent"></div>
         <div class="product-price">
             <span class="discounted-price">
                 {{ product.getDiscountedPrice() }}
@@ -12,6 +12,16 @@
                 {{ product.getOriginalPrice() }}
             </span>
         </div>
-        <p-rating [ngModel]="product.rating" [readonly]="true" stars="5" cancel="false"></p-rating>
+        <div class="available" *ngIf="product.stock > 0">
+            {{ product.stock }} available
+        </div>
+        <div class="not available" *ngIf="product.stock === 0">
+            OUT OF STOCK
+        </div>
+        <div class="found-in-description" *ngIf="descriptionContainsFilter()">
+            <span>Description contains:</span>
+            <span class="match" [innerHTML]="htmlDescription()"></span>
+        </div>
+        <p-rating class="rating" [ngModel]="product.rating" [readonly]="true" stars="5" cancel="false"></p-rating>
     </div>
 </p-card>

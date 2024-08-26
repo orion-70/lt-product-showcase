@@ -22,10 +22,12 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.fetchProductById(productId);
-    }
+    this.route.params.subscribe(params => {
+      const productId = params['id'];
+      if (productId) {
+        this.fetchProductById(productId);
+      }
+    });
   }
 
   fetchProductById(id: string): void {

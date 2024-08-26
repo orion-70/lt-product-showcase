@@ -39,7 +39,7 @@ export class Product {
         this.warrantyInformation = data.warrantyInformation;
         this.shippingInformation = data.shippingInformation;
         this.availabilityStatus = data.availabilityStatus;
-        this.reviews = data.reviews.map((review: any) => new Review(review));
+        this.reviews = data.reviews?.map((review: any) => new Review(review));
         this.returnPolicy = data.returnPolicy;
         this.minimumOrderQuantity = data.minimumOrderQuantity;
         this.meta = new Meta(data.meta);
@@ -55,10 +55,6 @@ export class Product {
         const discountedPrice = this.price - (this.price * (this.discountPercentage / 100));
         return discountedPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     }
-
-    isAvailable(): boolean {
-        return this.stock > 0;
-    }
 }
 
 export class Dimensions {
@@ -66,7 +62,13 @@ export class Dimensions {
     height: number;
     depth: number;
 
-    constructor(data: any) {
+    constructor(data: any | null) {
+        if (!data) {
+            this.width = 0;
+            this.height = 0;
+            this.depth = 0;
+            return;
+        }
         this.width = data.width;
         this.height = data.height;
         this.depth = data.depth;
@@ -80,7 +82,15 @@ export class Review {
     reviewerName: string;
     reviewerEmail: string;
 
-    constructor(data: any) {
+    constructor(data: any | null) {
+        if (!data) {
+            this.rating = 0;
+            this.comment = '';
+            this.date = new Date();
+            this.reviewerName = '';
+            this.reviewerEmail = '';
+            return;
+        }
         this.rating = data.rating;
         this.comment = data.comment;
         this.date = new Date(data.date);
@@ -95,7 +105,14 @@ export class Meta {
     barcode: string;
     qrCode: string;
 
-    constructor(data: any) {
+    constructor(data: any | null) {
+        if (!data) {
+            this.createdAt = new Date();
+            this.updatedAt = new Date();
+            this.barcode = '';
+            this.qrCode = '';
+            return;
+        }
         this.createdAt = new Date(data.createdAt);
         this.updatedAt = new Date(data.updatedAt);
         this.barcode = data.barcode;
@@ -105,40 +122,14 @@ export class Meta {
 
 export class ProductsResponse {
     products: Product[];
+    total: number = 0;
+    skip: number = 0;
+    limit: number = 0;
 
     constructor(data: any) {
         this.products = data.products.map((product: any) => new Product(product));
-    }
-
-    getProductById(id: string): Product | undefined {
-        return this.products.find(product => product.id === id);
-    }
-
-    getTotalStock(): number {
-        return this.products.reduce((acc, product) => acc + product.stock, 0);
-    }
-
-    getAvailableProducts(): Product[] {
-        return this.products.filter(product => product.isAvailable());
-    }
-
-    getAllCategories(): string[] {
-        return this.products.map(product => product.category);
-    }
-
-    getProductsByCategory(category: string): Product[] {
-        return this.products.filter(product => product.category === category);
-    }
-
-    getAllTags(): string[] {
-        return this.products.reduce((acc: string[], product) => [...acc, ...product.tags], []);
-    }
-
-    getProductsByTag(tag: string): Product[] {
-        return this.products.filter(product => product.tags.includes(tag));
-    }
-
-    searchProducts(query: string): Product[] {
-        return this.products.filter(product => product.title.toLowerCase().includes(query.toLowerCase()));
+        this.total = data.total;
+        this.skip = data.skip;
+        this.limit = data.limit;
     }
 }

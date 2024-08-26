@@ -1,9 +1,53 @@
 <div *ngIf="error" class="error">
     Error: {{ error }}
 </div>
+
+<form class="filter-form" [formGroup]="filterFormGroup">
+    <input
+        type="text"
+        pInputText
+        formControlName="filterTitle"
+        [placeholder]="filterTitlePlaceholder"
+        [style]="{ minWidth: '16rem' }" />
+    <p-dropdown
+        id="category"
+        formControlName="category"
+        [options]="categoryOptions"
+        optionValue="category_value"
+        optionLabel="category_name"
+        dataKey="id"
+        [style]="{ minWidth: '14rem' }" />
+    <label for="sortBy">sorted by</label>
+    <p-dropdown
+        id="sortBy"
+        formControlName="sortBy"
+        [options]="sortByOptions"
+        optionValue="sort_by_value"
+        optionLabel="sort_by_name"
+        dataKey="id"
+        [style]="{ minWidth: '7rem' }" />
+    <p-toggleButton
+        formControlName="order"
+        [onLabel]="'\u25b2'"
+        [offLabel]="'\u25bc'" />
+    <p-paginator
+        #paginator
+        [rows]="limit"
+        [totalRecords]="productsResponse?.total"
+        [showJumpToPageDropdown]="true"
+        [showPageLinks]="false"
+        (onPageChange)="onPageChange($event)"
+        [style]="{ minWidth: 'max-content' }"/>
+</form>
+
 <div class="product-grid">
-    <app-product-card *ngFor="let product of products" [product]="product" (click)="onClickGoToProductDetails(product.id)"></app-product-card>
+    <app-product-card
+        *ngFor="let product of products"
+        [product]="product"
+        [filterTitle]="filterTitle"
+        (click)="onClickGoToProductDetails(product.id)" />
 </div>
+
 <div *ngIf="!error && !productsResponse?.products?.length">
     No products available.
 </div>
