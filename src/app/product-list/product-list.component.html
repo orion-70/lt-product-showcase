@@ -33,7 +33,7 @@
     <p-paginator
         #paginator
         [rows]="limit"
-        [totalRecords]="productsResponse?.total"
+        [totalRecords]="productsResponse.total"
         [showJumpToPageDropdown]="true"
         [showPageLinks]="false"
         (onPageChange)="onPageChange($event)"

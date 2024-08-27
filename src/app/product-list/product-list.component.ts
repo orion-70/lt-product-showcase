@@ -12,7 +12,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 
 import { Product, ProductsResponse } from '../models/product-models';
 import { ProductCardComponent } from "../product-card/product-card.component";
-import { filter } from 'rxjs';
+
+type CategoryOption = { category_name: string, category_value: string };
 
 @Component({
   selector: 'app-product-list',
@@ -32,7 +33,7 @@ import { filter } from 'rxjs';
   providers: [ProductService]
 })
 export class ProductListComponent implements OnInit {
-  productsResponse: ProductsResponse | null = null;
+  productsResponse: ProductsResponse = new ProductsResponse({ products: [] });
   error: string | null = null;
   @Input() products: Product[] = [];
   limit: number = 24;
@@ -40,7 +41,7 @@ export class ProductListComponent implements OnInit {
   filterFormGroup: FormGroup;
   filterTitle: string = '';
   filterTitlePlaceholder: string = 'Find by name/description';
-  categoryOptions: any[] | undefined = [];
+  categoryOptions: CategoryOption[] = [];
   selectedCategory: string = '';
   sortByOptions: any[] = [
     {
@@ -70,7 +71,7 @@ export class ProductListComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator: Paginator | null = null;
 
   constructor(
-    private productService: ProductService,
+    public productService: ProductService,
     private router: Router
   ) {
     this.filterFormGroup = new FormGroup({
@@ -158,7 +159,7 @@ export class ProductListComponent implements OnInit {
           };
         });
         // Add an 'All' option to the beginning of the category options
-        this.categoryOptions?.unshift({
+        this.categoryOptions.unshift({
           category_name: 'All products',
           category_value: ''
         });

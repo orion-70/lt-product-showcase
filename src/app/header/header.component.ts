@@ -24,14 +24,14 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   items: MenuItem[] = [];
-  searchControl = new FormControl();
-  searchResults: ProductsResponse | null = null;
-  private routerSubscription: Subscription | null = null;
+  searchControl: FormControl = new FormControl();
+  searchResults: ProductsResponse = new ProductsResponse( { products: [] } );
+  private routerSubscription: Subscription = new Subscription();
 
   @ViewChild('searchInput') searchInput: ElementRef | null = null;
 
   constructor(
-    private productService: ProductService,
+    public productService: ProductService,
     private router: Router
   ) { }
 
@@ -88,14 +88,14 @@ export class HeaderComponent implements OnInit {
 
   onSelectProduct(product: any) {
     this.router.navigate(['/product', product.id]);
-    this.searchResults = null;
+    this.searchResults = new ProductsResponse( { products: [] } );
   }
 
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     const searchContainer = document.querySelector('.search-container');
     if (searchContainer && !searchContainer.contains(target)) {
-      this.searchResults = null;
+      this.searchResults = new ProductsResponse( { products: [] } );
     }
   }
 

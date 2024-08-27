@@ -128,8 +128,8 @@ export class ProductsResponse {
 
     constructor(data: any) {
         this.products = data.products.map((product: any) => new Product(product));
-        this.total = data.total;
-        this.skip = data.skip;
-        this.limit = data.limit;
+        this.total = data.total || 0;
+        this.skip = data.skip || 0;
+        this.limit = data.limit || 0;
     }
 }
