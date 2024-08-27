@@ -40,7 +40,7 @@ describe('ProductService', () => {
     });
 
     // Expectations
-    const query = `/category/${category}/?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}&select=title,price,thumbnail,discountPercentage,rating,category,stock,description`;
+    const query = `/category/${category}?q=&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}&select=title,price,thumbnail,discountPercentage,rating,category,stock,description`;
     const req = httpMock.expectOne(`${service['apiUrl']}${query}`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyProducts);

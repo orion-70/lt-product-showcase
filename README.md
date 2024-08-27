@@ -1,6 +1,6 @@
 # LT Product Showcase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1. It also uses the [PrimeNG](https://primeng.org/) UI component suite.
 
 ## Development server
 
@@ -20,7 +20,11 @@ The project utilizes the [DummyJSON API](https://dummyjson.com/) as a mock data 
 
 ## Deployment
 
-GitHub Pages were used to deploy a build for public access and testing. The npm package ['angular-cli-ghpages'](https://www.npmjs.com/package/angular-cli-ghpages) was used to streamline the process.
+GitHub Pages were used to deploy a build for public access and testing. The npm package ['angular-cli-ghpages'](https://www.npmjs.com/package/angular-cli-ghpages) was used to streamline the process. The deployed site can be found at [HERE](https://orion-70.github.io/lt-product-showcase/home).
+
+The following commands were used to execute each build and deployment:
+`ng build --base-href "https://orion-70.github.io/lt-product-showcase/"`
+`npx angular-cli-ghpages --dir=dist/lt-product-showcase/browser`
 
 ## Issues/Limitations
 

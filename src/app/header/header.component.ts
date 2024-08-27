@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
 
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
-      switchMap(value => this.productService.quickSearchProducts(value))
+      switchMap(value => value?.length > 0 ? this.productService.quickSearchProducts(value) : this.searchResults.products = [])
     ).subscribe(results => {
       this.assignSearchResults(results);
     });

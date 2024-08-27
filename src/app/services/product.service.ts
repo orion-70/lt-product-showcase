@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -30,24 +30,17 @@ export class ProductService {
     filter: string | null = null
   ): Observable<any> {
     filter = filter?.trim() || '';
-    let query = '';
+    let params = new HttpParams()
+      .set('q', filter)
+      .set('limit', limit.toString())
+      .set('skip', skip.toString())
+      .set('sortBy', sortBy || 'title')
+      .set('order', order || 'asc')
+      .set('select', 'title,price,thumbnail,discountPercentage,rating,category,stock,description');
     if (category) {
-      query += `/category/${category}/`;
+      return this.http.get<any>(`${this.apiUrl}/category/${category}`, { params });
     }
-    if (filter) {
-      query += `/search?q=${filter}&`;
-    } else {
-      query += '?';
-    }
-    query += `limit=${limit}&skip=${skip}`;
-    if (sortBy) {
-      query += `&sortBy=${sortBy}`;
-    }
-    if (order) {
-      query += `&order=${order}`;
-    }
-    query += '&select=title,price,thumbnail,discountPercentage,rating,category,stock,description';
-    return this.http.get<any>(`${this.apiUrl}${query}`);
+    return this.http.get<any>(`${this.apiUrl}/search?`, { params });
   }
 
   /**
@@ -70,7 +63,11 @@ export class ProductService {
     if (!query) {
       return new Observable();
     }
-    return this.http.get<any>(`${this.apiUrl}/search?q=${query}&select=title&sortBy=title`);
+    let params = new HttpParams()
+      .set('q', query)
+      .set('select', 'title')
+      .set('sortBy', 'title');
+    return this.http.get<any>(`${this.apiUrl}/search?`, { params });
   }
 
   /**
