@@ -36390,24 +36390,11 @@ var ProductService = class _ProductService {
    */
   getPagedProductCards(limit, skip, sortBy = "title", order = "asc", category = null, filter2 = null) {
     filter2 = filter2?.trim() || "";
-    let query = "";
+    let params = new HttpParams().set("q", filter2).set("limit", limit.toString()).set("skip", skip.toString()).set("sortBy", sortBy || "title").set("order", order || "asc").set("select", "title,price,thumbnail,discountPercentage,rating,category,stock,description");
     if (category) {
-      query += `/category/${category}/`;
+      return this.http.get(`${this.apiUrl}/category/${category}`, { params });
     }
-    if (filter2) {
-      query += `/search?q=${filter2}&`;
-    } else {
-      query += "?";
-    }
-    query += `limit=${limit}&skip=${skip}`;
-    if (sortBy) {
-      query += `&sortBy=${sortBy}`;
-    }
-    if (order) {
-      query += `&order=${order}`;
-    }
-    query += "&select=title,price,thumbnail,discountPercentage,rating,category,stock,description";
-    return this.http.get(`${this.apiUrl}${query}`);
+    return this.http.get(`${this.apiUrl}/search?`, { params });
   }
   /**
    * Retrieves a product by its ID.
@@ -36428,7 +36415,8 @@ var ProductService = class _ProductService {
     if (!query) {
       return new Observable();
     }
-    return this.http.get(`${this.apiUrl}/search?q=${query}&select=title&sortBy=title`);
+    let params = new HttpParams().set("q", query).set("select", "title").set("sortBy", "title");
+    return this.http.get(`${this.apiUrl}/search?`, { params });
   }
   /**
    * Retrieves all product categories.
@@ -58110,7 +58098,7 @@ function ProductDetailsComponent_div_0_img_3_Template(rf, ctx) {
     \u0275\u0275property("src", image_r1, \u0275\u0275sanitizeUrl)("alt", ctx_r1.product.title);
   }
 }
-function ProductDetailsComponent_div_0_div_37_Template(rf, ctx) {
+function ProductDetailsComponent_div_0_div_41_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "p");
     \u0275\u0275text(2);
@@ -58178,10 +58166,16 @@ function ProductDetailsComponent_div_0_Template(rf, ctx) {
     \u0275\u0275elementStart(32, "p");
     \u0275\u0275text(33);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(34, "div")(35, "h2");
-    \u0275\u0275text(36, "Reviews");
+    \u0275\u0275elementStart(34, "p");
+    \u0275\u0275text(35);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(37, ProductDetailsComponent_div_0_div_37_Template, 5, 2, "div", 4);
+    \u0275\u0275elementStart(36, "p");
+    \u0275\u0275text(37);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(38, "div")(39, "h2");
+    \u0275\u0275text(40, "Reviews");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(41, ProductDetailsComponent_div_0_div_41_Template, 5, 2, "div", 4);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -58209,7 +58203,11 @@ function ProductDetailsComponent_div_0_Template(rf, ctx) {
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1("Weight: ", ctx_r1.product.weight, " kg");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1("Dimensions: ", ctx_r1.product.dimensions, "");
+    \u0275\u0275textInterpolate1("Width: ", ctx_r1.product.dimensions.width, "");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1("Height: ", ctx_r1.product.dimensions.height, "");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1("Depth: ", ctx_r1.product.dimensions.depth, "");
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1("Warranty: ", ctx_r1.product.warrantyInformation, "");
     \u0275\u0275advance(2);
@@ -58257,7 +58255,7 @@ var ProductDetailsComponent = class _ProductDetailsComponent {
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ProductDetailsComponent, selectors: [["app-product-details"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 3, vars: 2, consts: [["loading", ""], ["class", "product-content", 4, "ngIf", "ngIfElse"], [1, "product-content"], ["class", "product-image", 3, "src", "alt", 4, "ngFor", "ngForOf"], [4, "ngFor", "ngForOf"], [1, "product-image", 3, "src", "alt"]], template: function ProductDetailsComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275template(0, ProductDetailsComponent_div_0_Template, 38, 18, "div", 1)(1, ProductDetailsComponent_ng_template_1_Template, 2, 0, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+      \u0275\u0275template(0, ProductDetailsComponent_div_0_Template, 42, 20, "div", 1)(1, ProductDetailsComponent_ng_template_1_Template, 2, 0, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
     }
     if (rf & 2) {
       const loading_r4 = \u0275\u0275reference(2);
@@ -64344,7 +64342,7 @@ var HeaderComponent = class _HeaderComponent {
         routerLink: "/products"
       }
     ];
-    this.searchControl.valueChanges.pipe(debounceTime(300), switchMap((value) => this.productService.quickSearchProducts(value))).subscribe((results) => {
+    this.searchControl.valueChanges.pipe(debounceTime(300), switchMap((value) => value?.length > 0 ? this.productService.quickSearchProducts(value) : this.searchResults.products = [])).subscribe((results) => {
       this.assignSearchResults(results);
     });
     document.addEventListener("click", this.onDocumentClick.bind(this));
