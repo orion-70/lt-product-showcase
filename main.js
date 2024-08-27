@@ -36377,10 +36377,18 @@ var ProductService = class _ProductService {
   constructor(http) {
     this.http = http;
   }
-  getAllProducts() {
-    return this.http.get(`${this.apiUrl}?limit=0`);
-  }
-  getPagedProductCards(limit, skip, sortBy = "title", order = "asc", category = null, filter2 = "") {
+  /**
+   * Retrieves paged product cards based on the specified parameters.
+   *
+   * @param limit - The maximum number of product cards to retrieve.
+   * @param skip - The number of product cards to skip.
+   * @param sortBy - The field to sort the product cards by. Defaults to 'title'.
+   * @param order - The sort order of the product cards. Defaults to 'asc'.
+   * @param category - The category of the product cards. Defaults to null.
+   * @param filter - The filter string to search for in the product cards. Defaults to null.
+   * @returns An Observable that emits the paged product cards.
+   */
+  getPagedProductCards(limit, skip, sortBy = "title", order = "asc", category = null, filter2 = null) {
     filter2 = filter2?.trim() || "";
     let query = "";
     if (category) {
@@ -36401,15 +36409,31 @@ var ProductService = class _ProductService {
     query += "&select=title,price,thumbnail,discountPercentage,rating,category,stock,description";
     return this.http.get(`${this.apiUrl}${query}`);
   }
+  /**
+   * Retrieves a product by its ID.
+   *
+   * @param id - The ID of the product to retrieve.
+   * @returns An observable that emits the product data.
+   */
   getProductById(id) {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
+  /**
+   * Performs a quick search for product titles only, based on the provided query.
+   *
+   * @param query - The search query string.
+   * @returns An Observable that emits the search results.
+   */
   quickSearchProducts(query) {
     if (!query) {
       return new Observable();
     }
     return this.http.get(`${this.apiUrl}/search?q=${query}&select=title&sortBy=title`);
   }
+  /**
+   * Retrieves all product categories.
+   * @returns An observable that emits an array of strings representing the product categories.
+   */
   getAllProductCategories() {
     return this.http.get(`${this.apiUrl}/category-list`);
   }
@@ -56471,9 +56495,9 @@ var ProductsResponse = class {
   limit = 0;
   constructor(data) {
     this.products = data.products.map((product) => new Product(product));
-    this.total = data.total;
-    this.skip = data.skip;
-    this.limit = data.limit;
+    this.total = data.total || 0;
+    this.skip = data.skip || 0;
+    this.limit = data.limit || 0;
   }
 };
 
@@ -57855,7 +57879,7 @@ function ProductListComponent_div_12_Template(rf, ctx) {
 var ProductListComponent = class _ProductListComponent {
   productService;
   router;
-  productsResponse = null;
+  productsResponse = new ProductsResponse({ products: [] });
   error = null;
   products = [];
   limit = 24;
@@ -57960,7 +57984,7 @@ var ProductListComponent = class _ProductListComponent {
             category_value: category
           };
         });
-        this.categoryOptions?.unshift({
+        this.categoryOptions.unshift({
           category_name: "All products",
           category_value: ""
         });
@@ -58027,7 +58051,7 @@ var ProductListComponent = class _ProductListComponent {
       \u0275\u0275property("onLabel", "\u25B2")("offLabel", "\u25BC");
       \u0275\u0275advance();
       \u0275\u0275styleMap(\u0275\u0275pureFunction0(24, _c44));
-      \u0275\u0275property("rows", ctx.limit)("totalRecords", ctx.productsResponse == null ? null : ctx.productsResponse.total)("showJumpToPageDropdown", true)("showPageLinks", false);
+      \u0275\u0275property("rows", ctx.limit)("totalRecords", ctx.productsResponse.total)("showJumpToPageDropdown", true)("showPageLinks", false);
       \u0275\u0275advance(3);
       \u0275\u0275property("ngForOf", ctx.products);
       \u0275\u0275advance();
@@ -58054,10 +58078,10 @@ var ProductListComponent = class _ProductListComponent {
     ToggleButtonModule,
     ToggleButton,
     ProductCardComponent
-  ], styles: ["\n\n.product-grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 1rem;\n  height: 100%;\n  margin: 1rem;\n  justify-content: center;\n  grid-auto-flow: dense;\n}\n.filter-form[_ngcontent-%COMP%] {\n  display: flex;\n  margin: 0.5rem auto;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.filter-form[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n/*# sourceMappingURL=product-list.component.css.map */"] });
+  ], styles: ["\n\n.product-grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 1rem;\n  height: 100%;\n  margin: 1rem;\n}\n.filter-form[_ngcontent-%COMP%] {\n  display: flex;\n  margin: 0.5rem auto;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.filter-form[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n/*# sourceMappingURL=product-list.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProductListComponent, { className: "ProductListComponent", filePath: "src\\app\\product-list\\product-list.component.ts", lineNumber: 34 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProductListComponent, { className: "ProductListComponent", filePath: "src\\app\\product-list\\product-list.component.ts", lineNumber: 35 });
 })();
 
 // src/app/product-details/product-details.component.ts
@@ -64285,8 +64309,8 @@ var HeaderComponent = class _HeaderComponent {
   router;
   items = [];
   searchControl = new FormControl();
-  searchResults = null;
-  routerSubscription = null;
+  searchResults = new ProductsResponse({ products: [] });
+  routerSubscription = new Subscription();
   searchInput = null;
   constructor(productService, router) {
     this.productService = productService;
@@ -64332,13 +64356,13 @@ var HeaderComponent = class _HeaderComponent {
   }
   onSelectProduct(product) {
     this.router.navigate(["/product", product.id]);
-    this.searchResults = null;
+    this.searchResults = new ProductsResponse({ products: [] });
   }
   onDocumentClick(event) {
     const target = event.target;
     const searchContainer = document.querySelector(".search-container");
     if (searchContainer && !searchContainer.contains(target)) {
-      this.searchResults = null;
+      this.searchResults = new ProductsResponse({ products: [] });
     }
   }
   ngOnDestroy() {
@@ -64381,43 +64405,19 @@ var FooterComponent = class _FooterComponent {
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FooterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["app-footer"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 39, vars: 0, consts: [[1, "footer"], [1, "footer-container"], [1, "footer-section"], ["href", "/contact"], ["href", "/faq"], ["href", "/returns"], ["href", "/shipping"], [1, "social-media"], ["href", "https://facebook.com/LTShop", "target", "_blank"], ["href", "https://twitter.com/LTShop", "target", "_blank"], ["href", "https://instagram.com/LTShop", "target", "_blank"], [1, "footer-bottom"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["app-footer"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 15, vars: 0, consts: [[1, "footer"], [1, "footer-container"], [1, "footer-section"], [1, "social-media"], ["href", "https://www.linkedin.com/in/tylerowen/", "target", "_blank"], ["href", "https://tylerowen.info/", "target", "_blank"], [1, "footer-bottom"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "footer", 0)(1, "div", 1)(2, "div", 2)(3, "h4");
-      \u0275\u0275text(4, "About LT Shop");
+      \u0275\u0275text(4, "Links");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(5, "p");
-      \u0275\u0275text(6, "LT Shop is your one-stop shop for all your needs. We offer a wide range of products at unbeatable prices.");
+      \u0275\u0275elementStart(5, "ul", 3)(6, "li")(7, "a", 4);
+      \u0275\u0275text(8, "LinkedIn");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(7, "div", 2)(8, "h4");
-      \u0275\u0275text(9, "Customer Service");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(10, "ul")(11, "li")(12, "a", 3);
-      \u0275\u0275text(13, "Contact Us");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(14, "li")(15, "a", 4);
-      \u0275\u0275text(16, "FAQ");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(17, "li")(18, "a", 5);
-      \u0275\u0275text(19, "Returns");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(20, "li")(21, "a", 6);
-      \u0275\u0275text(22, "Shipping Info");
-      \u0275\u0275elementEnd()()()();
-      \u0275\u0275elementStart(23, "div", 2)(24, "h4");
-      \u0275\u0275text(25, "Follow Us");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(26, "ul", 7)(27, "li")(28, "a", 8);
-      \u0275\u0275text(29, "Facebook");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(30, "li")(31, "a", 9);
-      \u0275\u0275text(32, "Twitter");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(33, "li")(34, "a", 10);
-      \u0275\u0275text(35, "Instagram");
+      \u0275\u0275elementStart(9, "li")(10, "a", 5);
+      \u0275\u0275text(11, "Porfolio");
       \u0275\u0275elementEnd()()()()();
-      \u0275\u0275elementStart(36, "div", 11)(37, "p");
-      \u0275\u0275text(38, "\xA9 2024 LT Shop. All rights reserved.");
+      \u0275\u0275elementStart(12, "div", 6)(13, "p");
+      \u0275\u0275text(14, "\xA9 2024 Tyler Owen. All rights reserved.");
       \u0275\u0275elementEnd()()();
     }
   }, styles: ["\n\n.footer[_ngcontent-%COMP%] {\n  background-color: #f8f8f8;\n  padding: 20px 0;\n  text-align: center;\n}\n.footer-container[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-around;\n  flex-wrap: wrap;\n}\n.footer-section[_ngcontent-%COMP%] {\n  flex: 1;\n  margin: 10px;\n}\n.footer-section[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\n  margin-bottom: 10px;\n}\n.footer-section[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%] {\n  list-style: none;\n  padding: 0;\n}\n.footer-section[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%] {\n  margin: 5px 0;\n}\n.footer-section[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n  text-decoration: none;\n  color: #333;\n}\n.footer-bottom[_ngcontent-%COMP%] {\n  margin-top: 20px;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
