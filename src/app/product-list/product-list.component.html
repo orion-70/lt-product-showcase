@@ -17,19 +17,21 @@
         optionLabel="category_name"
         dataKey="id"
         [style]="{ minWidth: '14rem' }" />
-    <label for="sortBy">sorted by</label>
-    <p-dropdown
-        id="sortBy"
-        formControlName="sortBy"
-        [options]="sortByOptions"
-        optionValue="sort_by_value"
-        optionLabel="sort_by_name"
-        dataKey="id"
-        [style]="{ minWidth: '7rem' }" />
-    <p-toggleButton
-        formControlName="order"
-        [onLabel]="'\u25b2'"
-        [offLabel]="'\u25bc'" />
+    <div class="form-group">
+        <label for="sortBy">sorted by</label>
+        <p-dropdown
+            id="sortBy"
+            formControlName="sortBy"
+            [options]="sortByOptions"
+            optionValue="sort_by_value"
+            optionLabel="sort_by_name"
+            dataKey="id"
+            [style]="{ minWidth: '7rem' }" />
+        <p-toggleButton
+            formControlName="order"
+            [onLabel]="'\u25b2'"
+            [offLabel]="'\u25bc'" />
+    </div>
     <p-paginator
         #paginator
         [rows]="limit"
@@ -48,6 +50,8 @@
         (click)="onClickGoToProductDetails(product.id)" />
 </div>
 
-<div *ngIf="!error && !productsResponse?.products?.length">
-    No products available.
+<div *ngIf="!error && !productsResponse?.products?.length && !loading" class="no-products-loading">
+    No products available
 </div>
+
+<div *ngIf="loading" class="no-products-loading"></div>

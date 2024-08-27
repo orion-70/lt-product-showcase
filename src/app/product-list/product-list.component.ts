@@ -35,6 +35,7 @@ type CategoryOption = { category_name: string, category_value: string };
 export class ProductListComponent implements OnInit {
   productsResponse: ProductsResponse = new ProductsResponse({ products: [] });
   error: string | null = null;
+  loading: boolean = false;
   @Input() products: Product[] = [];
   limit: number = 24;
   skip: number = 0;
@@ -94,6 +95,7 @@ export class ProductListComponent implements OnInit {
    * Fetches products and updates the component's state with the retrieved data.
    */
   fetchProducts(): void {
+    this.loading = true;
     this.selectedCategory = this.filterFormGroup.get('category')?.value;
     const filterTitleInput = this.filterFormGroup.get('filterTitle');
     if (this.selectedCategory !== '') {
@@ -140,8 +142,14 @@ export class ProductListComponent implements OnInit {
           this.skip = 0;
           this.paginator?.changePage(0);
         }
+
+        this.loading = false;
       },
-      error: (err) => this.error = err.message
+      error: (err) => {
+        this.error = err.message
+        this.products = [];
+        this.loading = false;
+      }
     });
   }
 
