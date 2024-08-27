@@ -57842,7 +57842,7 @@ var _c35 = () => ({ minWidth: "7rem" });
 var _c44 = () => ({ minWidth: "max-content" });
 function ProductListComponent_div_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 12);
+    \u0275\u0275elementStart(0, "div", 13);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -57852,11 +57852,11 @@ function ProductListComponent_div_0_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" Error: ", ctx_r1.error, "\n");
   }
 }
-function ProductListComponent_app_product_card_11_Template(rf, ctx) {
+function ProductListComponent_app_product_card_12_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "app-product-card", 13);
-    \u0275\u0275listener("click", function ProductListComponent_app_product_card_11_Template_app_product_card_click_0_listener() {
+    \u0275\u0275elementStart(0, "app-product-card", 14);
+    \u0275\u0275listener("click", function ProductListComponent_app_product_card_12_Template_app_product_card_click_0_listener() {
       const product_r4 = \u0275\u0275restoreView(_r3).$implicit;
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.onClickGoToProductDetails(product_r4.id));
@@ -57869,11 +57869,16 @@ function ProductListComponent_app_product_card_11_Template(rf, ctx) {
     \u0275\u0275property("product", product_r4)("filterTitle", ctx_r1.filterTitle);
   }
 }
-function ProductListComponent_div_12_Template(rf, ctx) {
+function ProductListComponent_div_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div");
-    \u0275\u0275text(1, " No products available.\n");
+    \u0275\u0275elementStart(0, "div", 15);
+    \u0275\u0275text(1, " No products available\n");
     \u0275\u0275elementEnd();
+  }
+}
+function ProductListComponent_div_14_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "div", 15);
   }
 }
 var ProductListComponent = class _ProductListComponent {
@@ -57881,6 +57886,7 @@ var ProductListComponent = class _ProductListComponent {
   router;
   productsResponse = new ProductsResponse({ products: [] });
   error = null;
+  loading = false;
   products = [];
   limit = 24;
   skip = 0;
@@ -57935,6 +57941,7 @@ var ProductListComponent = class _ProductListComponent {
    * Fetches products and updates the component's state with the retrieved data.
    */
   fetchProducts() {
+    this.loading = true;
     this.selectedCategory = this.filterFormGroup.get("category")?.value;
     const filterTitleInput = this.filterFormGroup.get("filterTitle");
     if (this.selectedCategory !== "") {
@@ -57967,8 +57974,13 @@ var ProductListComponent = class _ProductListComponent {
           this.skip = 0;
           this.paginator?.changePage(0);
         }
+        this.loading = false;
       },
-      error: (err) => this.error = err.message
+      error: (err) => {
+        this.error = err.message;
+        this.products = [];
+        this.loading = false;
+      }
     });
   }
   /**
@@ -58013,49 +58025,52 @@ var ProductListComponent = class _ProductListComponent {
       let _t;
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.paginator = _t.first);
     }
-  }, inputs: { products: "products" }, standalone: true, features: [\u0275\u0275ProvidersFeature([ProductService]), \u0275\u0275StandaloneFeature], decls: 13, vars: 25, consts: [["paginator", ""], ["class", "error", 4, "ngIf"], [1, "filter-form", 3, "formGroup"], ["type", "text", "pInputText", "", "formControlName", "filterTitle", 3, "placeholder"], ["id", "category", "formControlName", "category", "optionValue", "category_value", "optionLabel", "category_name", "dataKey", "id", 3, "options"], ["for", "sortBy"], ["id", "sortBy", "formControlName", "sortBy", "optionValue", "sort_by_value", "optionLabel", "sort_by_name", "dataKey", "id", 3, "options"], ["formControlName", "order", 3, "onLabel", "offLabel"], [3, "onPageChange", "rows", "totalRecords", "showJumpToPageDropdown", "showPageLinks"], [1, "product-grid"], [3, "product", "filterTitle", "click", 4, "ngFor", "ngForOf"], [4, "ngIf"], [1, "error"], [3, "click", "product", "filterTitle"]], template: function ProductListComponent_Template(rf, ctx) {
+  }, inputs: { products: "products" }, standalone: true, features: [\u0275\u0275ProvidersFeature([ProductService]), \u0275\u0275StandaloneFeature], decls: 15, vars: 26, consts: [["paginator", ""], ["class", "error", 4, "ngIf"], [1, "filter-form", 3, "formGroup"], ["type", "text", "pInputText", "", "formControlName", "filterTitle", 3, "placeholder"], ["id", "category", "formControlName", "category", "optionValue", "category_value", "optionLabel", "category_name", "dataKey", "id", 3, "options"], [1, "form-group"], ["for", "sortBy"], ["id", "sortBy", "formControlName", "sortBy", "optionValue", "sort_by_value", "optionLabel", "sort_by_name", "dataKey", "id", 3, "options"], ["formControlName", "order", 3, "onLabel", "offLabel"], [3, "onPageChange", "rows", "totalRecords", "showJumpToPageDropdown", "showPageLinks"], [1, "product-grid"], [3, "product", "filterTitle", "click", 4, "ngFor", "ngForOf"], ["class", "no-products-loading", 4, "ngIf"], [1, "error"], [3, "click", "product", "filterTitle"], [1, "no-products-loading"]], template: function ProductListComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275template(0, ProductListComponent_div_0_Template, 2, 1, "div", 1);
       \u0275\u0275elementStart(1, "form", 2);
       \u0275\u0275element(2, "input", 3)(3, "p-dropdown", 4);
-      \u0275\u0275elementStart(4, "label", 5);
-      \u0275\u0275text(5, "sorted by");
+      \u0275\u0275elementStart(4, "div", 5)(5, "label", 6);
+      \u0275\u0275text(6, "sorted by");
       \u0275\u0275elementEnd();
-      \u0275\u0275element(6, "p-dropdown", 6)(7, "p-toggleButton", 7);
-      \u0275\u0275elementStart(8, "p-paginator", 8, 0);
-      \u0275\u0275listener("onPageChange", function ProductListComponent_Template_p_paginator_onPageChange_8_listener($event) {
+      \u0275\u0275element(7, "p-dropdown", 7)(8, "p-toggleButton", 8);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(9, "p-paginator", 9, 0);
+      \u0275\u0275listener("onPageChange", function ProductListComponent_Template_p_paginator_onPageChange_9_listener($event) {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.onPageChange($event));
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(10, "div", 9);
-      \u0275\u0275template(11, ProductListComponent_app_product_card_11_Template, 1, 2, "app-product-card", 10);
+      \u0275\u0275elementStart(11, "div", 10);
+      \u0275\u0275template(12, ProductListComponent_app_product_card_12_Template, 1, 2, "app-product-card", 11);
       \u0275\u0275elementEnd();
-      \u0275\u0275template(12, ProductListComponent_div_12_Template, 2, 0, "div", 11);
+      \u0275\u0275template(13, ProductListComponent_div_13_Template, 2, 0, "div", 12)(14, ProductListComponent_div_14_Template, 1, 0, "div", 12);
     }
     if (rf & 2) {
       \u0275\u0275property("ngIf", ctx.error);
       \u0275\u0275advance();
       \u0275\u0275property("formGroup", ctx.filterFormGroup);
       \u0275\u0275advance();
-      \u0275\u0275styleMap(\u0275\u0275pureFunction0(21, _c113));
+      \u0275\u0275styleMap(\u0275\u0275pureFunction0(22, _c113));
       \u0275\u0275property("placeholder", ctx.filterTitlePlaceholder);
       \u0275\u0275advance();
-      \u0275\u0275styleMap(\u0275\u0275pureFunction0(22, _c28));
+      \u0275\u0275styleMap(\u0275\u0275pureFunction0(23, _c28));
       \u0275\u0275property("options", ctx.categoryOptions);
-      \u0275\u0275advance(3);
-      \u0275\u0275styleMap(\u0275\u0275pureFunction0(23, _c35));
+      \u0275\u0275advance(4);
+      \u0275\u0275styleMap(\u0275\u0275pureFunction0(24, _c35));
       \u0275\u0275property("options", ctx.sortByOptions);
       \u0275\u0275advance();
       \u0275\u0275property("onLabel", "\u25B2")("offLabel", "\u25BC");
       \u0275\u0275advance();
-      \u0275\u0275styleMap(\u0275\u0275pureFunction0(24, _c44));
+      \u0275\u0275styleMap(\u0275\u0275pureFunction0(25, _c44));
       \u0275\u0275property("rows", ctx.limit)("totalRecords", ctx.productsResponse.total)("showJumpToPageDropdown", true)("showPageLinks", false);
       \u0275\u0275advance(3);
       \u0275\u0275property("ngForOf", ctx.products);
       \u0275\u0275advance();
-      \u0275\u0275property("ngIf", !ctx.error && !(ctx.productsResponse == null ? null : ctx.productsResponse.products == null ? null : ctx.productsResponse.products.length));
+      \u0275\u0275property("ngIf", !ctx.error && !(ctx.productsResponse == null ? null : ctx.productsResponse.products == null ? null : ctx.productsResponse.products.length) && !ctx.loading);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.loading);
     }
   }, dependencies: [
     CommonModule,
@@ -58078,7 +58093,7 @@ var ProductListComponent = class _ProductListComponent {
     ToggleButtonModule,
     ToggleButton,
     ProductCardComponent
-  ], styles: ["\n\n.product-grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 1rem;\n  height: 100%;\n  margin: 1rem;\n}\n.filter-form[_ngcontent-%COMP%] {\n  display: flex;\n  margin: 0.5rem auto;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.filter-form[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n/*# sourceMappingURL=product-list.component.css.map */"] });
+  ], styles: ["\n\n.product-grid[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  gap: 1rem;\n  height: 100%;\n  margin: 1rem;\n}\n.filter-form[_ngcontent-%COMP%] {\n  display: flex;\n  margin: 0.5rem auto;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.filter-form[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:not(:last-child) {\n  margin-right: 0.5rem;\n  margin-bottom: 0.5rem;\n}\n.form-group[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: center;\n}\n.form-group[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.no-products-loading[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 25vh;\n  font-size: 1.5rem;\n  color: #666;\n}\n/*# sourceMappingURL=product-list.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProductListComponent, { className: "ProductListComponent", filePath: "src\\app\\product-list\\product-list.component.ts", lineNumber: 35 });
